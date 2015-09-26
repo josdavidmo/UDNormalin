@@ -23,9 +23,9 @@ function Relacion(atributos, dependeciasFuncionales) {
 
 Relacion.prototype.calcularCerramiento = function (atributos) {
     var cerramiento = atributos;
-    var auxDependenciasFuncionales = 
+    var auxDependenciasFuncionales = this.dependenciasFuncionales.clone();
     cerramiento = this.calcularCerramientoIterativo(cerramiento,
-            this.dependenciasFuncionales);
+                                                    auxDependenciasFuncionales);
     return cerramiento;
 };
 
