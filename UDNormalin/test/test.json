@@ -1,0 +1,1 @@
+[ {"atributos": "A,B,C,D,E,F"} ,{"dependenciasFuncionales": "AB->C,D->EF,C->A,BE->C,BC->D,CF->BD,ACD->B,CE->AF" } ]

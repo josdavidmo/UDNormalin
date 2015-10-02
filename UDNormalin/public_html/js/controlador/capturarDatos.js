@@ -1,10 +1,8 @@
-var algoritmo = "";
-var txtEntrada = "";
+algoritmo = "";
+txtEntrada = "";
 
-var txtAtributos = "";
-var txtDependencias = "";
-
-var exportarRelacion;
+txtAtributos = "";
+txtDependencias = "";
 
 function leerArchivo(files) {
     var file = files[0];
@@ -18,14 +16,14 @@ function leerArchivo(files) {
         output.textContent = e.target.result;
 
 
-    }
+    };
     reader.readAsText(file);
 
 }
 
 function validarDependencia(pAtributo, pUniverso) {
     for (var i = 0; i < pUniverso.length; i++) {
-        if (pAtributo == pUniverso[i].nombre) {
+        if (pAtributo === pUniverso[i].nombre) {
             return i;
         }
     }
@@ -38,34 +36,26 @@ function procesarArchivo() {
     try {
         divFile = document.getElementById('fileOutput');
         datosArchivo = divFile.textContent;
-
         valorJson = JSON.parse(datosArchivo);
-
         for (var i = 0; i < valorJson.length; i++) {
             //La segunda posicion corresponde a los atributos
             if (i === 0) {
                 txtAtributos = valorJson[i].atributos;
-            }
-            // la ultima corresponde a las dependencias funcionales
-            else {
+            } else {
                 txtDependencias = valorJson[i].dependenciasFuncionales;
             }
         }
-
     } catch (err) {
         console.log('Por favor valide el formato del archivo ' + err);
     }
 }
 
 function calcular() {
-    //Obtiene los datos del formulario 
     var esArchivo = document.getElementById('archivo').value;
-
-    if (esArchivo == 'S') {
+    if (esArchivo === 'S') {
         procesarArchivo();
     } else {
         txtEntrada = document.getElementById('txt_entrada').value;
-
         txtEntrada = txtEntrada.replace(" ", "");
         auxPosicion1 = txtEntrada.indexOf("{") + 1;
         auxPosicion2 = txtEntrada.indexOf("}");
@@ -90,11 +80,6 @@ function calcular() {
 
         var auxImplicado = auxDependencia[0];
         var auxImplicante = auxDependencia[1];
-        
-        if ( auxImplicado == auxImplicante ){
-            alert("Dependencias triviales ");
-            return;
-        }
 
         //Valida los implicados
         var arregloImplicado = [];
@@ -115,7 +100,7 @@ function calcular() {
             }
             arregloImplicante.push(atributos[indiceImplicante]);
         }
-       
+
         var dependencias = new DependenciaFuncional(arregloImplicado, arregloImplicante);
         dependenciasFuncionales.push(dependencias);
     }
