@@ -1,11 +1,14 @@
-algoritmo = "";
-txtEntrada = "";
+//algoritmo = "";
 
 txtAtributos = "";
 txtDependencias = "";
-
-function leerArchivo(files) {
-    var file = files[0];
+/*
+ * Procesa archivo json con los siguientes datos
+ * Atributos y dependencias funcionales
+ * @param {file} archivo JSON
+ */
+function leerArchivo(file) {
+    var file = file[0];
     document.getElementById('archivo').value = 'S';
     var reader = new FileReader();
 
@@ -21,8 +24,16 @@ function leerArchivo(files) {
 
 }
 
+/**
+ * 
+ * @param {type} pAtributo Atributo a evaluar
+ * @param {type} pUniverso Universo de atributos
+ * @returns {Number} Retorna -1 si el valor no se encuentra
+ * en el universo de atributos 
+ */
 function validarDependencia(pAtributo, pUniverso) {
-    for (var i = 0; i < pUniverso.length; i++) {
+    var i = pUniverso.length;
+    while ( i-- ){
         if (pAtributo === pUniverso[i].nombre) {
             return i;
         }
@@ -31,7 +42,11 @@ function validarDependencia(pAtributo, pUniverso) {
 
 }
 
-
+/**
+ * Lee archivo JSON y obtiene el universo de atributos
+ * y la dependencias funcionales
+ * @returns {undefined}
+ */
 function procesarArchivo() {
     try {
         divFile = document.getElementById('fileOutput');
@@ -50,12 +65,21 @@ function procesarArchivo() {
     }
 }
 
+/**
+ * Valida y ajustas los datos obtenidos para realizar
+ * procesados para realizar el calculo correspondiente de 
+ * cada algoritmo 
+ * @returns {undefined}
+ */
 function calcular() {
+    txtAtributos = "";
+    txtDependencias = "";
+
     var esArchivo = document.getElementById('archivo').value;
     if (esArchivo === 'S') {
         procesarArchivo();
     } else {
-        txtEntrada = document.getElementById('txt_entrada').value;
+        var txtEntrada = document.getElementById('txt_entrada').value;
         txtEntrada = txtEntrada.replace(" ", "");
         auxPosicion1 = txtEntrada.indexOf("{") + 1;
         auxPosicion2 = txtEntrada.indexOf("}");
@@ -72,15 +96,16 @@ function calcular() {
         atributos.push(atributo);
     }
     //Objetos de dependencias
-    var arrDep = txtDependencias.split(",");
+    var arrDep = txtDependencias.split(";");
     var dependenciasFuncionales = [];
     for (var j = 0; j < arrDep.length; j++) {
 
         var auxDependencia = arrDep[j].split("->");
 
-        var auxImplicado = auxDependencia[0];
-        var auxImplicante = auxDependencia[1];
+        var auxImplicado = auxDependencia[0].split(',');
+        var auxImplicante = auxDependencia[1].split(',');
 
+  
         //Valida los implicados
         var arregloImplicado = [];
         var arregloImplicante = [];
@@ -106,13 +131,12 @@ function calcular() {
     }
 
     relacion = new Relacion(atributos, dependenciasFuncionales);
-    //exportarRelacion = relacion;
 
     document.getElementById('btn_exportar').style.display = '';
 
 
     recubrimientoMinimal = relacion.recubrimientoMinimal();
-    llaves = relacion.llaves(recubrimientoMinimal);
+    llaves = relacion.llaves(atributos, recubrimientoMinimal);
 
     exportarRelacion = new Relacion(atributos, recubrimientoMinimal);
 

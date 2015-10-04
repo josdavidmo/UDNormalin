@@ -48,9 +48,9 @@
                         <label class="col-sm-2 control-label" for="txt_relacion">Relación</label>
                         <div class="col-sm-10">
                             <!--<input class="form-control" type="text" id="txt_relacion">-->
-                            <input type="text" class="form-control" size="100" id="txt_entrada" placeholder="R({A1,A2,...,AN},{A1->A2,A1A2->AN,...,A1A2...AN->A1})" value="R({A,B,C,D,E,F,G},{AB->C,BD->FG,AE->C,C->DE})">
+                            <input type="text" class="form-control" size="100" id="txt_entrada" placeholder="R({A1,A2,...,AN},{A1->A2,A1A2->AN,...,A1A2...AN->A1})" value="R({A,B,C,D,E,F,G},{A,B->C;B,D->F,G;A,E->C;C->D,E})">
                             <button type="button" class="btn btn-default" onclick="calcular()">Calcular</button>
-                            <button type="button" class="btn btn-default" id="btn_exportar" onclick="exportar()" style="display:none" >Exportar</button>
+                            <button type="button" class="btn btn-default" id="btn_exportar" onclick="exportarGrafo()" style="display:none" >Exportar</button>
                             <input id="fileInput" type="file" size="50" class="btn btn-default" onchange="leerArchivo(this.files)">
                             <div id="fileOutput"></div>
                         </div>

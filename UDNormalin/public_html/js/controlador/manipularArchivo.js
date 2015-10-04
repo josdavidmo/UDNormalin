@@ -1,3 +1,8 @@
+/**
+ * Exporta una relacion en formato
+ * JSON
+ * @returns {undefined}
+ */
 function exportar() {
 
     var relacionArch = exportarRelacion;
@@ -28,7 +33,12 @@ function exportar() {
 
 }
 
-
+/**
+ * 
+ * @param {type} pImplicado
+ * @param {type} pImplicante
+ * @returns {String}
+ */
 function obtieneDependencias(pImplicado, pImplicante) {
     var texto = '';
     for (var i = 0; i < pImplicado.length; i++) {
@@ -44,5 +54,20 @@ function obtieneDependencias(pImplicado, pImplicante) {
     texto += ',';
 
     return texto;
+}
+
+/**
+ * Crea un archivo con la estrutura requerida
+ * por la libreria cytoscape
+ * @param {type} nodos  atributos del universo 
+ * @param {type} depedencias dependencias funcionales
+ * @returns {undefined}
+ */
+function exportarGrafo(){
+     var nodos = relacion.getNodesCytoscape();   
+     var dependencias = relacion.getEdgesCytoscape();
+     
+     var txtArchivo  = JSON.stringify(nodos) +","+ JSON.stringify(dependencias); 
+     window.open('data:text/json;charset=utf-8,' + escape(txtArchivo));
 }
 
