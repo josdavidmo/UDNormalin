@@ -90,28 +90,28 @@ Relacion.prototype.cierre = function (atributos, dependenciasFuncionales) {
  * @param {Array|Atributo} dependenciasFuncionales
  * @returns {Array|Atributo}
  */
-Relacion.prototype.calcularCerramiento
+Relacion.prototype.calcularCerramiento 
         = function (cierre, dependenciasFuncionales) {
-            var auxCierre = new Array();
-            while (auxCierre.toString() !== cierre.toString()) {
-                auxCierre = cierre.clone();
-                var i = dependenciasFuncionales.length;
-                while (i--) {
-                    var implicado = dependenciasFuncionales[i].implicado;
-                    var implicante = dependenciasFuncionales[i].implicante;
-                    if (cierre.containsArray(implicado)) {
-                        dependenciasFuncionales.splice(i, 1);
-                        var j = implicante.length;
-                        while (j--) {
-                            if (!cierre.contains(implicante[j])) {
-                                cierre.push(implicante[j]);
-                            }
-                        }
+    var auxCierre = new Array();
+    while (auxCierre.toString() !== cierre.toString()) {
+        auxCierre = cierre.clone();
+        var i = dependenciasFuncionales.length;
+        while (i--) {
+            var implicado = dependenciasFuncionales[i].implicado;
+            var implicante = dependenciasFuncionales[i].implicante;
+            if (cierre.containsArray(implicado)) {
+                dependenciasFuncionales.splice(i, 1);
+                var j = implicante.length;
+                while (j--) {
+                    if (!cierre.contains(implicante[j])) {
+                        cierre.push(implicante[j]);
                     }
                 }
             }
-            return cierre;
-        };
+        }
+    }
+    return cierre;
+};
 
 /**
  * Obtiene el recubrimiento minimal de las dependencias funcionales almacenadas
@@ -129,17 +129,17 @@ Relacion.prototype.recubrimientoMinimal = function () {
  * @param {Array|DependenciaFuncional} dependenciasFuncionales
  * @returns {Array|DependenciaFUncional}
  */
-Relacion.prototype.calcularRecubrimientoMinimal
+Relacion.prototype.calcularRecubrimientoMinimal 
         = function (dependenciasFuncionales) {
-            var auxDependenciasFuncionales = dependenciasFuncionales.clone();
-            auxDependenciasFuncionales
-                    = this.eliminarAtributosExtranosDerecha(auxDependenciasFuncionales);
-            auxDependenciasFuncionales
-                    = this.eliminarAtributosExtranosIzquierda(auxDependenciasFuncionales);
-            auxDependenciasFuncionales
-                    = this.eliminarRedundancias(auxDependenciasFuncionales);
-            return auxDependenciasFuncionales;
-        };
+    var auxDependenciasFuncionales = dependenciasFuncionales.clone();
+    auxDependenciasFuncionales
+            = this.eliminarAtributosExtranosDerecha(auxDependenciasFuncionales);
+    auxDependenciasFuncionales
+            = this.eliminarAtributosExtranosIzquierda(auxDependenciasFuncionales);
+    auxDependenciasFuncionales
+            = this.eliminarRedundancias(auxDependenciasFuncionales);
+    return auxDependenciasFuncionales;
+};
 
 /**
  * Elimina los atributos extraños a derecha de un conjunto de dependencias 
@@ -148,26 +148,26 @@ Relacion.prototype.calcularRecubrimientoMinimal
  * depedencias funcionales.
  * @returns {Array|DependenciaFuncional}
  */
-Relacion.prototype.eliminarAtributosExtranosDerecha
+Relacion.prototype.eliminarAtributosExtranosDerecha 
         = function (dependenciasFuncionales) {
-            var auxDependenciasFuncionales = dependenciasFuncionales.clone();
-            var i = auxDependenciasFuncionales.length;
-            while (i--) {
-                var implicado = auxDependenciasFuncionales[i].implicado;
-                var implicante = auxDependenciasFuncionales[i].implicante;
-                if (implicante.length > 1) {
-                    auxDependenciasFuncionales.splice(i, 1);
-                    var j = implicante.length;
-                    while (j--) {
-                        var auxImplicante = new Array(implicante[j]);
-                        var dependenciaFuncional = new DependenciaFuncional(implicado,
-                                auxImplicante);
-                        auxDependenciasFuncionales.push(dependenciaFuncional);
-                    }
-                }
+    var auxDependenciasFuncionales = dependenciasFuncionales.clone();
+    var i = auxDependenciasFuncionales.length;
+    while (i--) {
+        var implicado = auxDependenciasFuncionales[i].implicado;
+        var implicante = auxDependenciasFuncionales[i].implicante;
+        if (implicante.length > 1) {
+            auxDependenciasFuncionales.splice(i, 1);
+            var j = implicante.length;
+            while (j--) {
+                var auxImplicante = new Array(implicante[j]);
+                var dependenciaFuncional = new DependenciaFuncional(implicado,
+                        auxImplicante);
+                auxDependenciasFuncionales.push(dependenciaFuncional);
             }
-            return auxDependenciasFuncionales;
-        };
+        }
+    }
+    return auxDependenciasFuncionales;
+};
 
 /**
  * Elimina los atributos extraños a izquierda de un conjunto de dependencias 
@@ -176,27 +176,27 @@ Relacion.prototype.eliminarAtributosExtranosDerecha
  * dependencias funcionales.
  * @returns {Array|DependenciaFuncional}
  */
-Relacion.prototype.eliminarAtributosExtranosIzquierda
+Relacion.prototype.eliminarAtributosExtranosIzquierda 
         = function (dependenciasFuncionales) {
-            var auxDependenciasFuncionales = dependenciasFuncionales.clone();
-            var i = dependenciasFuncionales.length;
-            while (i--) {
-                var implicante = dependenciasFuncionales[i].implicante;
-                var implicado = dependenciasFuncionales[i].implicado;
-                if (implicado.length > 1) {
-                    var j = implicado.length;
-                    while (j--) {
-                        var auxImplicado = implicado.clone();
-                        auxImplicado.splice(j, 1);
-                        var cierre = this.cierre(auxImplicado, dependenciasFuncionales);
-                        if (cierre.containsArray(implicante)) {
-                            auxDependenciasFuncionales[i].implicado = auxImplicado;
-                        }
-                    }
+    var auxDependenciasFuncionales = dependenciasFuncionales.clone();
+    var i = dependenciasFuncionales.length;
+    while (i--) {
+        var implicante = dependenciasFuncionales[i].implicante;
+        var implicado = dependenciasFuncionales[i].implicado;
+        if (implicado.length > 1) {
+            var j = implicado.length;
+            while (j--) {
+                var auxImplicado = implicado.clone();
+                auxImplicado.splice(j, 1);
+                var cierre = this.cierre(auxImplicado, dependenciasFuncionales);
+                if (cierre.containsArray(implicante)) {
+                    auxDependenciasFuncionales[i].implicado = auxImplicado;
                 }
             }
-            return auxDependenciasFuncionales.deleteDuplicades();
-        };
+        }
+    }
+    return auxDependenciasFuncionales.deleteDuplicades();
+};
 
 /**
  * Elimina las redundancias de un conjunto de dependencias funcionales.
@@ -232,21 +232,21 @@ Relacion.prototype.llaves = function (atributos, dependenciasFuncionales) {
     var llaves = atributos.subtract(implicantes);
     var cierre = this.cierre(llaves, dependenciasFuncionales);
     if (cierre.equals(atributos)) {
-        return llaves;
+        return new Array(llaves);
     } else {
         llaves = new Array();
         var implicados = this.getImplicados(dependenciasFuncionales);
         var w = atributos.subtract(implicados);
         var v = atributos.subtract(w);
         var j = 1;
-        while(j <= v.length){
+        while (j <= v.length) {
             var combinatorias = v.combineWithoutRepeat(j);
             var i = combinatorias.length;
-            while(i--){
+            while (i--) {
                 var cierre = this.cierre(combinatorias[i], dependenciasFuncionales);
                 if (cierre.equals(atributos)) {
                     llaves.push(combinatorias[i]);
-                    v = v.subtract(combinatorias[i]); 
+                    v = v.subtract(combinatorias[i]);
                 }
             }
             j++;
@@ -293,4 +293,29 @@ Relacion.prototype.getImplicados = function (dependenciasFuncionales) {
         }
     }
     return implicados;
+};
+
+/**
+ * Determina si una dependencia funcional esta en FNBC.
+ * @param {Array|Atributo} llaves
+ * @param {Array|DependenciaFuncional} dependenciasFuncionales
+ * @returns {Boolean}
+ */
+Relacion.prototype.isFNBC = function (llaves, dependenciasFuncionales) {
+    var i = dependenciasFuncionales.length;
+    while (i--) {
+        var implicado = dependenciasFuncionales[i].implicado;
+        var j = llaves.length;
+        var contiene = false;
+        while (j-- && !contiene) {
+            var llave = llaves[j];
+            if (implicado.equals(llave)) {
+                contiene = true;
+            }
+        }
+        if (!contiene) {
+            return false;
+        }
+    }
+    return true;
 };

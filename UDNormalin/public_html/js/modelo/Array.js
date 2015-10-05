@@ -119,7 +119,7 @@ Array.prototype.calculateCombineWithoutRepeat
         actual = actual.substring(0, actual.length - 1);
         var auxArray = actual.split(",");
         var j = auxArray.length;
-        while(j--){
+        while (j--) {
             auxArray[j] = new Atributo(auxArray[j]);
         }
         combinatorias.push(auxArray);
@@ -129,9 +129,9 @@ Array.prototype.calculateCombineWithoutRepeat
         while (j--) {
             auxArray.splice(j, 1);
             var element = array[j];
-            this.calculateCombineWithoutRepeat(combinatorias, 
-                                               actual + element + ",", 
-                                               auxArray.slice(0), n - 1);
+            this.calculateCombineWithoutRepeat(combinatorias,
+                    actual + element + ",",
+                    auxArray.slice(0), n - 1);
         }
     }
 };

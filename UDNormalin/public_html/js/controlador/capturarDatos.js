@@ -33,7 +33,7 @@ function leerArchivo(file) {
  */
 function validarDependencia(pAtributo, pUniverso) {
     var i = pUniverso.length;
-    while ( i-- ){
+    while (i--) {
         if (pAtributo === pUniverso[i].nombre) {
             return i;
         }
@@ -105,7 +105,7 @@ function calcular() {
         var auxImplicado = auxDependencia[0].split(',');
         var auxImplicante = auxDependencia[1].split(',');
 
-  
+
         //Valida los implicados
         var arregloImplicado = [];
         var arregloImplicante = [];
@@ -137,11 +137,21 @@ function calcular() {
 
     recubrimientoMinimal = relacion.recubrimientoMinimal();
     llaves = relacion.llaves(atributos, recubrimientoMinimal);
-
+    var auxLlaves = "";
+    var j = llaves.length;
+    while (j--) {
+        auxLlaves += "{" + llaves[j] + "}";
+    }
     exportarRelacion = new Relacion(atributos, recubrimientoMinimal);
+    isFNBC = relacion.isFNBC(llaves, recubrimientoMinimal);
+    var auxIsFNCB = "NO"; 
+    if(isFNBC){
+        auxIsFNCB = "SI";
+    }
 
     document.getElementById("txt_recubrimiento_minimal").value = "{" + recubrimientoMinimal + "}";
-    document.getElementById("txt_llaves").value = "{" + llaves + "}";
+    document.getElementById("txt_llaves").value = "{" + auxLlaves + "}";
+    document.getElementById("txt_fnbc").value = auxIsFNCB;
 
     cy = cytoscape({
         container: document.getElementById('cy'),
