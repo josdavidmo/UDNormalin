@@ -43,45 +43,49 @@
             <div class="container">
                 <h1>Bienvenido a UD Normalin!</h1>
                 <form class="form-horizontal" role="form">
-                    <input type="hidden" id="archivo" value ="N"/>
                     <div class="form-group form-group-lg">
-                        <label class="col-sm-2 control-label" for="txt_relacion">Relación</label>
+                        <label class="col-sm-2 control-label" for="select_algoritmo">Acción</label>
                         <div class="col-sm-10">
-                            <!--<input class="form-control" type="text" id="txt_relacion">-->
-                            <input type="text" class="form-control" size="100" id="txt_entrada" placeholder="R({A1,A2,...,AN},{A1->A2,A1A2->AN,...,A1A2...AN->A1})" value="R({A,B,C,D,E,F,G},{A,B->C;B,D->F,G;A,E->C;C->D,E})">
-                            <button type="button" class="btn btn-default" onclick="calcular()">Calcular</button>
-                            <button type="button" class="btn btn-default" id="btn_exportar" onclick="exportarGrafo()" style="display:none" >Exportar</button>
-                            <input id="fileInput" type="file" size="50" class="btn btn-default" onchange="leerArchivo(this.files)">
-                            <div id="fileOutput"></div>
+                            <select id="select_algoritmo" class="form-control">
+                                <option value="algoritmo1">Recubrimiento Minimal</option>
+                                <option value="algoritmo2">Conjunto de Llaves Candidatas</option>
+                                <option value="algoritmo3">¿Está en FNBC?</option>
+                                <option value="algoritmo4">Representación Gráfica</option>
+                            </select>
                         </div>
                     </div>
                     <div class="form-group form-group-lg">
-                        <label class="col-sm-2 control-label" for="txt_recubrimiento_minimal">Recubrimiento Minimal</label>
-                        <div class="col-sm-10">
-                            <input class="form-control" type="text" id="txt_recubrimiento_minimal">
+                        <label class="col-sm-2 control-label" for="txt_entrada">Entrada</label>
+                        <div class="col-sm-5">
+                            <input type="text" class="form-control" size="100" id="txt_entrada" placeholder="R({A1,A2,...,AN},{A1->A2,A1A2->AN,...,A1A2...AN->A1})" value="R({A,B,C,D,E,F,G},{A,B->C;B,D->F,G;A,E->C;C->D,E})" onchange="leerArchivo(this.files)"> 
+                        </div>
+                        <div class="col-sm-5">
+                            <button type="button" class="btn btn-default" onclick="cambiarTipoEntrada()" id="btn_tipo_entrada">Subir Archivo</button>
+                            <button type="button" class="btn btn-default" onclick="ejecutar()">Calcular</button>
+                            <button type="button" class="btn btn-default" id="btn_exportar" onclick="exportarGrafo()">Exportar</button>
+                            <button type="button" class="btn btn-default" id="btn_detalle" onclick="mostrarDetalle()" style="display:none;" >Mostrar Paso a Paso</button>
+                            <button type="button" class="btn btn-default" id="btn_ocultar" onclick="ocultarDetalle()" style="display:none;" >Ocultar Paso a Paso</button>
                         </div>
                     </div>
-                    <div class="form-group form-group-lg">
-                        <label class="col-sm-2 control-label" for="txt_llaves">Conjunto de Llaves</label>
+                    <div class="alert alert-danger" role="alert" style="display:none" id="mensaje_error"></div>
+                    <div id="panel_archivo" class="form-group form-group-lg" style="display:none">
+                        <label class="col-sm-2 control-label">Archivo Recibido</label>
                         <div class="col-sm-10">
-                            <div class="col-md-12">
-                                <input class="form-control" type="text" id="txt_llaves">
-                            </div>
+                            <p id="fileOutput"></p>
                         </div>
                     </div>
-                    <div class="form-group form-group-lg">
-                        <label class="col-sm-2 control-label" for="txt_fnbc">¿Está en FNBC?</label>
-                        <div class="col-sm-10">
-                            <div class="col-md-12">
-                                <input class="form-control" type="text" id="txt_fnbc">
-                            </div>
+                    <div class="form-group form-group-lg" style="display:none" id="panel_ejecucion">
+                        <label class="col-sm-2 control-label" id="label_ejecucion"></label>
+                        <div class="col-sm-8">
+                            <div id="text_ejecucion"></div>
+                        </div>
+                        <div class="col-sm-2">
+                            <div id="text_tiempo"></div>
                         </div>
                     </div>
-                    <div class="form-group form-group-lg">
-                        <label class="col-sm-2 control-label">Representación Gráfica</label>
-                        <div class="col-sm-10">
-                            <div id="cy" style="width: 855px;height: 400px"></div>
-                        </div>
+                    <div class="form-group form-group-lg" style="display:none" id="panel_detalle">
+                        <label class="col-sm-2 control-label">Paso a Paso</label>
+                        <div class="col-sm-10" id="text_detalle"></div>
                     </div>
                 </form>
             </div>
