@@ -1,3 +1,5 @@
+/* global relacion */
+
 /**
  * Exporta una relacion en formato
  * JSON

@@ -60,7 +60,7 @@ function validarDependencia(pAtributo, pUniverso) {
 function ejecutar() {
     var accion = document.getElementById('select_algoritmo').value;
     var auxRelacion = capturarEntradas();
-    var relacion = convertirEntradas(auxRelacion[0], auxRelacion[1]);
+    relacion = convertirEntradas(auxRelacion[0], auxRelacion[1]);
     if (relacion !== null) {
         ejecutarAccion(accion, relacion);
     }
@@ -260,7 +260,6 @@ function capturarEntradas() {
         var auxPosicion3 = txtEntrada.indexOf(")") - 1;
         txtDependencias = txtEntrada.substring(auxPosicion2 + 3, auxPosicion3);
     }
-    //exportarRelacion = new Relacion(atributos, dependenciasFuncionales);
     document.getElementById('btn_exportar').style.display = '';
     document.getElementById('btn_detalle').style.display = '';
     document.getElementById('panel_ejecucion').style.display = '';
